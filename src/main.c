@@ -113,23 +113,26 @@ static void argument_analysis(int argc, char *argv[],bool (*options)[], bool *ne
             {
                 if(argv[i][1] == '-')
                 {
-                    if((strcasestr(argv[i], "version") - argv[i]) > 1) {(*options)[VERSION] = (bool*)true; count++;}
-                    else if((strcasestr(argv[i], "help") - argv[i]) > 1) {(*options)[HELP] = (bool*)true; count++;}
+                    if((strcasestr(argv[i], "version") - argv[i]) > 1) {(*options)[VERSION] = (bool)true; count++;}
+                    else if((strcasestr(argv[i], "help") - argv[i]) > 1) {(*options)[HELP] = (bool)true; count++;}
+                    else {(*options)[HELP] = (bool)true; return;}
                 }
                 else
                 {
-                    for(int j = 1; j < strlen(argv[i]); j++)
+                    int len = strlen(argv[i]);
+                    for(int j = 1; j < len; j++)
                     {
-                        if (argv[i][j] == 'v') {(*options)[VERSION] = (bool*)true; count++;}
-                        else if(argv[i][j] == 'h') {(*options)[HELP] = (bool*)true; count++;}
+                        if (argv[i][j] == 'v') {(*options)[VERSION] = (bool)true; count++;}
+                        else if(argv[i][j] == 'h') {(*options)[HELP] = (bool)true; count++;}
+                        else {(*options)[HELP] = (bool)true; return;}
                     }
                 }
             }
         }
     }
-    else {(*options)[HELP] = (bool*)true;;} //default
+    else {(*options)[HELP] = (bool)true;;} //default
 
-    if(count > 1) {*need_more = (bool*)true;}
+    if(count > 1) {*need_more = (bool)true;}
     return;
 }
 

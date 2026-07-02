@@ -1,5 +1,5 @@
 .vscode/
-Build/
+build/
 compile_commands.json
 .cache/
 goo-goo-bird-tools
