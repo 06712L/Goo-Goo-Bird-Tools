@@ -16,6 +16,13 @@ enum
 
 typedef struct
 {
+    bool version;
+    bool help;
+}options;
+
+typedef struct
+{
+    const char *what;
     const char *desc;
     const char *usage;
     const char *options;
@@ -36,6 +43,7 @@ const HELP_t help[] =
 {
     [EN_US] =
     {
+        .what = "There is an imposter parameter among us.",
         .desc = "DESC: A toolbox that makes a cooing sound (but actually doesn't)",
         .usage = "USAGE: goo-goo-bird-tools [options] / [tool] [options] ...",
         .options = "options:",
@@ -47,6 +55,7 @@ const HELP_t help[] =
 
     [ZH] =
     {
+        .what = "在我们之中有冒牌参数",
         .desc = "描述：一个会咕咕叫的工具箱（实际上不会）",
         .usage = "用法：goo-goo-bird-tools [選項] / [工具] [選項] ...",
         .options = "選項:",
@@ -76,10 +85,10 @@ const VERSION_t version[] =
 
 
 
-static void goo_goo_bird_basic(bool options[], int lang, bool need_more)
+static void goo_goo_bird_basic(options options, int lang, bool need_more, bool what_is_that)
 {
     //version
-    if(options[VERSION])
+    if(options.version && !what_is_that)
     {
         printf("%s\n", version[lang].tools_name);
         printf("%s\n", version[lang].tools_version);
@@ -88,8 +97,9 @@ static void goo_goo_bird_basic(bool options[], int lang, bool need_more)
     }
 
     //help
-    if(options[HELP])
+    if(options.help)
     {
+        if(what_is_that) {printf("%s\n\n", help[lang].what);}
         printf("%s\n", help[lang].desc);
         printf("%s\n", help[lang].usage);
         printf("%s\n", help[lang].options);
@@ -102,7 +112,7 @@ static void goo_goo_bird_basic(bool options[], int lang, bool need_more)
     return;
 }
 
-static void argument_analysis(int argc, char *argv[],bool (*options)[], bool *need_more)
+static void argument_analysis(int argc, char *argv[], options *options, bool *need_more, bool *what_is_that)
 {
     int count = 0;
     if(argc > 1)
@@ -113,26 +123,41 @@ static void argument_analysis(int argc, char *argv[],bool (*options)[], bool *ne
             {
                 if(argv[i][1] == '-')
                 {
-                    if((strcasestr(argv[i], "version") - argv[i]) > 1) {(*options)[VERSION] = (bool)true; count++;}
-                    else if((strcasestr(argv[i], "help") - argv[i]) > 1) {(*options)[HELP] = (bool)true; count++;}
-                    else {(*options)[HELP] = (bool)true; return;}
+                    if(!strcmp(argv[i], "--version")) {options->version = true; count++;}
+                    else if(!strcmp(argv[i], "--help")) {options->help = true; count++;}
+                    else {*what_is_that = true;options->help = true; return;}
                 }
                 else
                 {
                     int len = strlen(argv[i]);
                     for(int j = 1; j < len; j++)
                     {
-                        if (argv[i][j] == 'v') {(*options)[VERSION] = (bool)true; count++;}
-                        else if(argv[i][j] == 'h') {(*options)[HELP] = (bool)true; count++;}
-                        else {(*options)[HELP] = (bool)true; return;}
+                        switch (argv[i][j])
+                        {
+                            case 'v':
+                                options->version = true;
+                                count++;
+                                break;
+                            case 'h':
+                                options->help = true;
+                                count++;
+                                break;
+                            default:
+                                *what_is_that = true;
+                                options->help = true;
+                                return;
+                        };
                     }
                 }
             }
+            else if(!strcmp(argv[i], "re-entry-remove")) {puts("I haven't developed it yet.");return;}
+            else if(!strcmp(argv[i], "why")) {puts("No reason.");return;}
+            else {*what_is_that = true;options->help = true; return;}
         }
     }
-    else {(*options)[HELP] = (bool)true;;} //default
+    else {options->help = true;} //default
 
-    if(count > 1) {*need_more = (bool)true;}
+    if(count > 1) {*need_more = true;}
     return;
 }
 
@@ -141,11 +166,13 @@ int main(int argc, char *argv[], char *envp[])
     int lang = (getenv("LC_ALL") && strcasestr(getenv("LC_ALL"), "zh") != NULL) ? ZH:EN_US;
     if(!strcmp(argv[0], "goo-goo-bird-tools"))
         {
-            bool need_more = false;
-            bool options[2];
-            for(uint8_t i = 0; i < 2; i++) {options[i] = false;}
-            argument_analysis(argc, argv, &options, &need_more);
-            goo_goo_bird_basic(options, lang, need_more);
+            bool need_more = false, what_is_that = false;
+            options options;
+            options.version = false;
+            options.help = false;
+
+            argument_analysis(argc, argv, &options, &need_more, &what_is_that);
+            goo_goo_bird_basic(options, lang, need_more, what_is_that);
         }
     return 0;
 }
