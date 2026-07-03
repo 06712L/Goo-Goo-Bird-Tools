@@ -18,7 +18,7 @@ typedef struct
 {
     bool version;
     bool help;
-}options;
+}options_s;
 
 typedef struct
 {
@@ -36,14 +36,13 @@ typedef struct
 {
     const char *tools_name;
     const char *tools_version;
-    const char *tools_developer;
 }VERSION_t;
 
 const HELP_t help[] =
 {
     [EN_US] =
     {
-        .what = "There is an imposter parameter among us.",
+        .what = "There's a fake parameter among us, possibly",
         .desc = "DESC: A toolbox that makes a cooing sound (but actually doesn't)",
         .usage = "USAGE: goo-goo-bird-tools [options] / [tool] [options] ...",
         .options = "options:",
@@ -55,10 +54,10 @@ const HELP_t help[] =
 
     [ZH] =
     {
-        .what = "在我们之中有冒牌参数",
+        .what = "在我们之中有冒牌参数,可能是",
         .desc = "描述：一个会咕咕叫的工具箱（实际上不会）",
-        .usage = "用法：goo-goo-bird-tools [選項] / [工具] [選項] ...",
-        .options = "選項:",
+        .usage = "用法：goo-goo-bird-tools [选择] / [工具] [选择] ...",
+        .options = "选择:",
         .opt_help = "\t-h, --help\t\t显示此辅助说明",
         .opt_version = "\t-v, --version\t\t显示版本号",
         .tools = "工具:",
@@ -70,36 +69,33 @@ const VERSION_t version[] =
 {
     [EN_US] =
     {
-        .tools_name = "Goo-Goo-Bird Toolbox (GGB-Tools)",
+        .tools_name = "Goo-Goo-Bird Toolbox (GGB-tools)",
         .tools_version = "GGB Version V0.1",
-        .tools_developer = "GGB Developer: 06712L (A penguin)"
     },
 
     [ZH] =
     {
-        .tools_name = "Goo-Goo-Bird 工具箱 (GGB-Tools)",
+        .tools_name = "Goo-Goo-Bird 工具箱 (GGB-tools)",
         .tools_version = "GGB 版本 V0.1",
-        .tools_developer = "GGB 开发者: 06712L (A penguin)"//I use sublime text 4, btw; hehe
     }
 };
 
 
 
-static void goo_goo_bird_basic(options options, int lang, bool need_more, bool what_is_that)
+static void goo_goo_bird_basic(options_s options, int lang, bool need_more, bool what_is_that, char *unknown)
 {
     //version
     if(options.version && !what_is_that)
     {
         printf("%s\n", version[lang].tools_name);
         printf("%s\n", version[lang].tools_version);
-        printf("%s\n", version[lang].tools_developer);
         if(need_more) {putchar('\n');}
     }
 
     //help
     if(options.help)
     {
-        if(what_is_that) {printf("%s\n\n", help[lang].what);}
+        if(what_is_that) {printf("%s %s\n\n", help[lang].what, unknown);}
         printf("%s\n", help[lang].desc);
         printf("%s\n", help[lang].usage);
         printf("%s\n", help[lang].options);
@@ -112,7 +108,24 @@ static void goo_goo_bird_basic(options options, int lang, bool need_more, bool w
     return;
 }
 
-static void argument_analysis(int argc, char *argv[], options *options, bool *need_more, bool *what_is_that)
+static void unknown_parameter(char *target, options_s **options, bool **what_is_that, char ***unknown, char *mod)
+{
+    if(!strcmp(mod, "long"))
+    {
+        **unknown = malloc(strlen(target) + 1);
+        strcpy(**unknown, target);
+    }
+    else if(!strcmp(mod, "short"))
+    {
+        **unknown = malloc(3 * sizeof(char));
+        sprintf(**unknown, "-%c", *target);
+    }
+    **what_is_that = true;
+    (*options)->help = true;
+    return;
+}
+
+static void argument_analysis(int argc, char *argv[], options_s *options, bool *need_more, bool *what_is_that, char **unknown)
 {
     int count = 0;
     if(argc > 1)
@@ -125,7 +138,11 @@ static void argument_analysis(int argc, char *argv[], options *options, bool *ne
                 {
                     if(!strcmp(argv[i], "--version")) {options->version = true; count++;}
                     else if(!strcmp(argv[i], "--help")) {options->help = true; count++;}
-                    else {*what_is_that = true;options->help = true; return;}
+                    else
+                    {
+                        unknown_parameter(argv[i], &options, &what_is_that, &unknown, "long");
+                        return;
+                    }
                 }
                 else
                 {
@@ -143,16 +160,22 @@ static void argument_analysis(int argc, char *argv[], options *options, bool *ne
                                 count++;
                                 break;
                             default:
-                                *what_is_that = true;
-                                options->help = true;
+                                unknown_parameter(&argv[i][j], &options, &what_is_that, &unknown, "short");
                                 return;
                         };
                     }
                 }
             }
-            else if(!strcmp(argv[i], "re-entry-remove")) {puts("I haven't developed it yet.");return;}
-            else if(!strcmp(argv[i], "why")) {puts("No reason.");return;}
-            else {*what_is_that = true;options->help = true; return;}
+            else if(!strcmp(argv[i], "re-entry-remove"))
+            {
+                puts("I haven't developed it yet.");
+                return;
+            }
+            else
+            {
+                unknown_parameter(argv[i], &options, &what_is_that, &unknown, "long");
+                return;
+            }
         }
     }
     else {options->help = true;} //default
@@ -166,13 +189,16 @@ int main(int argc, char *argv[], char *envp[])
     int lang = (getenv("LC_ALL") && strcasestr(getenv("LC_ALL"), "zh") != NULL) ? ZH:EN_US;
     if(!strcmp(argv[0], "goo-goo-bird-tools"))
         {
+
             bool need_more = false, what_is_that = false;
-            options options;
+            char *unknown = NULL;
+            options_s options;
             options.version = false;
             options.help = false;
 
-            argument_analysis(argc, argv, &options, &need_more, &what_is_that);
-            goo_goo_bird_basic(options, lang, need_more, what_is_that);
+            argument_analysis(argc, argv, &options, &need_more, &what_is_that, &unknown);
+            goo_goo_bird_basic(options, lang, need_more, what_is_that, unknown);
+            if(unknown) {free(unknown);}
         }
     return 0;
 }
