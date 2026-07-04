@@ -4,10 +4,26 @@
 #include <stdint.h>
 #include <stdio.h>
 #include <unistd.h>
-#include <getopt.h>
 #include <stdbool.h>
 #include "lang.h"
 
+typedef struct
+{
+    int argc;
+    char** argv;
+    char** envp;
+}__POSIX;
+
+inline void which_tool_core(int* return_v , char* target_name, int (*tool_main)(int argc, char* argv[], char* envp[]), __POSIX* _POSIX)
+{
+    if(!strcmp(_POSIX->argv[0], target_name))
+    {
+        *return_v = (*tool_main)(_POSIX->argc, _POSIX->argv, _POSIX->envp);
+    }
+    return;
+}
+
+//goo-goo-bird-tools  V
 enum
 {
     VERSION = 0,
@@ -44,7 +60,7 @@ const HELP_t help[] =
     {
         .what = "There's a fake parameter among us, possibly",
         .desc = "DESC: A toolbox that makes a cooing sound (but actually doesn't)",
-        .usage = "USAGE: goo-goo-bird-tools [options] / [tool] [options] ...",
+        .usage = "USAGE: goo-goo-bird-tools [options] or [tool] [options] [target]",
         .options = "options:",
         .opt_help = "\t-h, --help\t\tShow this help message",
         .opt_version = "\t-v, --version\t\tDisplays the version number",
@@ -56,7 +72,7 @@ const HELP_t help[] =
     {
         .what = "在我们之中有冒牌参数,可能是",
         .desc = "描述：一个会咕咕叫的工具箱（实际上不会）",
-        .usage = "用法：goo-goo-bird-tools [选择] / [工具] [选择] ...",
+        .usage = "用法：goo-goo-bird-tools [选择] 或者 [工具] [选择] [目标]",
         .options = "选择:",
         .opt_help = "\t-h, --help\t\t显示此辅助说明",
         .opt_version = "\t-v, --version\t\t显示版本号",
@@ -79,8 +95,6 @@ const VERSION_t version[] =
         .tools_version = "GGB 版本 V0.1",
     }
 };
-
-
 
 static void goo_goo_bird_basic(options_s options, int lang, bool need_more, bool what_is_that, char *unknown)
 {
@@ -147,6 +161,11 @@ static void argument_analysis(int argc, char *argv[], options_s *options, bool *
                 else
                 {
                     int len = strlen(argv[i]);
+                    if(len < 2)
+                    {
+                        unknown_parameter(argv[i], &options, &what_is_that, &unknown, "long");
+                        return;
+                    }
                     for(int j = 1; j < len; j++)
                     {
                         switch (argv[i][j])
@@ -169,7 +188,7 @@ static void argument_analysis(int argc, char *argv[], options_s *options, bool *
             else if(!strcmp(argv[i], "re-entry-remove"))
             {
                 puts("I haven't developed it yet.");
-                return;
+                exit(0);
             }
             else
             {
@@ -184,7 +203,7 @@ static void argument_analysis(int argc, char *argv[], options_s *options, bool *
     return;
 }
 
-int main(int argc, char *argv[], char *envp[])
+static int goo_goo_bird_tools(int argc, char *argv[], char *envp[])
 {
     int lang = (getenv("LC_ALL") && strcasestr(getenv("LC_ALL"), "zh") != NULL) ? ZH:EN_US;
     if(!strcmp(argv[0], "goo-goo-bird-tools"))
@@ -201,4 +220,15 @@ int main(int argc, char *argv[], char *envp[])
             if(unknown) {free(unknown);}
         }
     return 0;
+}
+
+//VVVVVV   Selection Tool
+int main(int argc, char *argv[], char *envp[])
+{
+    __POSIX _POSIX = {argc, argv, envp};
+    int return_v = 0;
+
+    which_tool_core(&return_v, "goo-goo-bird-tools", goo_goo_bird_tools, &_POSIX);
+
+    return return_v;
 }
