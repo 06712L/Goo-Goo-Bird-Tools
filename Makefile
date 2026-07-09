@@ -30,7 +30,7 @@ endif
 TARGET := goo-goo-bird-tools
 CORE_OBJS =
 
-.PHONY: ggb-core link clean
+.PHONY: ggb-core link clean cleanobj cleanbin
 all: ggb-core
 
 include ggb-core/core.mk
@@ -42,8 +42,15 @@ ggb-core: $(CORE_OBJS)
 
 
 link: $(BIN_DIR)/$(TARGET)
-	ln -sf $(CURDIR)/$(BIN_DIR)/$(TARGET) ~/.local/bin/$(TARGET)
+	ln -sf $(BIN_DIR)/$(TARGET) ~/.local/bin/$(TARGET)
 
 
 clean:
 	rm -rf $(BUILD_DIR) ~/.local/bin/$(TARGET)
+
+cleanobj:
+	rm -rf  $(OBJS_DIR)
+
+
+cleanbin:
+	rm -rf $(BIN_DIR)

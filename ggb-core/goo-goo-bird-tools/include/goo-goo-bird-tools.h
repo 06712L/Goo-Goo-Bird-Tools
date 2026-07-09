@@ -1,8 +1,7 @@
 #ifndef GOO_GOO_BIRD_TOOLS_H
 #define GOO_GOO_BIRD_TOOLS_H
 
-#include <stdbool.h>
-#include "cliargs.h"
+#define bool _Bool
 
 enum
 {
@@ -24,25 +23,7 @@ typedef struct
     char *unknown;
 }bird_var;
 
-typedef struct
-{
-    const char *what;
-    const char *desc;
-    const char *usage;
-    const char *options;
-    const char *opt_help;
-    const char *opt_version;
-    const char *tools;
-    const char *tool_re_entry_remove;
-}HELP_t;
-
-typedef struct
-{
-    const char *tools_name;
-    const char *tools_version;
-}VERSION_t;
-
-int goo_goo_bird_tools(int argc, char **argv, char **envp);
-int argument_analysis(CLIarg arg, bird_var* var, options_bird options[]);
+int goo_goo_bird_tools(int argc, char *argv[], char *envp[]);
+void goo_goo_bird_basic(int lang, options_bird options[], bird_var var);
 
 #endif

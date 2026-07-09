@@ -1,4 +1,14 @@
+#VS code
 .vscode/
+
+#byproducts
 build/
+
+#bear/clangd
 compile_commands.json
+
+#I don't know which software this folder belongs to
 .cache/
+
+#Valgrind
+vgcore.*

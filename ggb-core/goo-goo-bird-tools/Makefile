@@ -31,10 +31,10 @@ ifeq ($(STATIC),1)
 LDFLAGS += -static
 endif
 
-OBJS := $(OBJS_DIR)/main.o
+OBJS := $(OBJS_DIR)/selection-tool.o $(OBJS_DIR)/goo-goo-bird-tools.o
 TARGET := goo-goo-bird-tools
 
-.PHONY: main clean cleanbin cleanobj
+.PHONY: main assembly clean cleanbin cleanobj
 all: main
 
 
