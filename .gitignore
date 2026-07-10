@@ -3,12 +3,15 @@
 
 #byproducts
 build/
+*.a
+a.out
 
 #bear/clangd
 compile_commands.json
 
-#I don't know which software this folder belongs to
+#clangd
 .cache/
 
 #Valgrind
 vgcore.*
+callgrind.out.*

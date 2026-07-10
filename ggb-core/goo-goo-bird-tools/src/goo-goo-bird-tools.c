@@ -10,6 +10,8 @@
 #include "selectiontool.h"
 
 //VVVVVVVV    goo-goo-bird-tools
+
+//HELP options
 typedef struct
 {
     const char *what;
@@ -20,9 +22,10 @@ typedef struct
     const char *opt_version;
     const char *tools;
     /*Add your tool description! ex: const char *tool_YourToolName;
-    添加你的工具說明！ 示範：.const char *tool_YourToolName;*/
+    添加你的工具說明！ 示範： const char *tool_YourToolName;*/
 }HELP_t;
 
+//VERSION options
 typedef struct
 {
     const char *tools_name;
@@ -52,7 +55,7 @@ const HELP_t help[] =
         .opt_help = "\t-h, --help\t\t显示此辅助说明",
         .opt_version = "\t-v, --version\t\t显示版本号",
         .tools = "工具:"
-        //添加你的工具說明！ 示範：.tool_YourToolName = "\tyour_tool_name\t\t這是個工具";
+        //添加你的工具說明！ 示範： .tool_YourToolName = "\tyour_tool_name\t\t這是個工具";
     }
 };
 
@@ -71,6 +74,13 @@ const VERSION_t version[] =
     }
 };
 
+/**
+ * @brief        Display the selection for goo-goo-bird-tools, the tools included in the toolbox, and version information
+ *
+ * @param lang        Language
+ * @param options        options's flags
+ * @param var        Variables for goo-goo-bird-tools
+ */
 void goo_goo_bird_basic(int lang, options_bird options[], bird_var var)
 {
     //version
@@ -90,38 +100,68 @@ void goo_goo_bird_basic(int lang, options_bird options[], bird_var var)
         printf("%s\n", help[lang].opt_help);
         printf("%s\n", help[lang].opt_version);
         printf("%s\n", help[lang].tools);
-        printf("%s\n", "\tNothing");
+        printf("%s\n\n", "\tNothing");
     }
 
     return;
 }
 
-static void long_unknow(bird_var** var, const CLIarg arg, const int which_arg_unknow)
+/**
+ * @brief        Input the unknown param into var->unknow
+ *
+ * @param var        Variables for goo-goo-bird-tools
+ * @param arg        Shell input values
+ * @param which_arg_unknow        Location of the unknown parameter
+ */
+void long_unknow(bird_var** var, const CLIarg arg, const int which_arg_unknow)
 {
     (*var)->what_is_that = true;
-    (*var)->unknown = malloc(strlen(arg.argv[which_arg_unknow]) + 1);
+    (*var)->unknown = malloc(strlen(arg.argv[which_arg_unknow]) + 1); //The reason for adding 1 is to accommodate '\0'
     strcpy((*var)->unknown, arg.argv[which_arg_unknow]);
     return;
 }
 
+/**
+ * @brief        Input the unknown param into var->unknow
+ *
+ * @param var        Variables for goo-goo-bird-tools
+ * @param arg        Shell input values
+ * @param which_arg_unknow        Location of the unknown parameter
+ * @param which_unknow        The position of the unknown parameter in the position
+ * @param len        Parameter string length
+ */
 static void short_unknow(bird_var** var, const CLIarg arg, const int which_arg_unknow, const int which_unknow, const int len)
 {
     (*var)->what_is_that = true;
     if(len < 2)
     {
-        (*var)->unknown = malloc(sizeof(char));
+        (*var)->unknown = malloc(sizeof(char) + 1);
         sprintf((*var)->unknown, "-");
     }
     else
     {
-        (*var)->unknown = calloc((sizeof(arg.argv[which_arg_unknow][which_unknow]) + 1), sizeof(char));
+        (*var)->unknown = malloc(((sizeof(arg.argv[which_arg_unknow][which_unknow])) + 2) * sizeof(char)); //The reason for adding 2 is to accommodate '-' and '\0'
         sprintf((*var)->unknown, "-%c", arg.argv[which_arg_unknow][which_unknow]);
     }
     return;
 }
 
+/**
+ * @brief        Parse the options and tool name passed to goo-goo-bird-tools
+ *
+ * @param arg        Shell input values
+ * @param var        Variables for goo-goo-bird-tools
+ * @param opions        The option's long name, short name, and flags
+ *
+ * @return 0        Executing normally
+ * @return other        Return value from the called tool
+ */
 static int argument_analysis(CLIarg arg, bird_var* var, options_bird options[])
 {
+    if(arg.argc < 2)
+    {
+        options[HELP].switch_opt = true;
+    }
     for(int i = 1; i < arg.argc; i++)
     {
         if(arg.argv[i][0] == '-')
@@ -138,7 +178,6 @@ static int argument_analysis(CLIarg arg, bird_var* var, options_bird options[])
                         find = true;
                     }
                 }
-
                 if(!find)
                 {
                     options[HELP].switch_opt = true;
@@ -146,10 +185,10 @@ static int argument_analysis(CLIarg arg, bird_var* var, options_bird options[])
                     break;
                 }
             }
+
             //short opt
             else
             {
-
                 int opt_len = strlen(arg.argv[i]);
                 if(opt_len < 2)
                 {
@@ -157,7 +196,6 @@ static int argument_analysis(CLIarg arg, bird_var* var, options_bird options[])
                     short_unknow(&var, arg, i, 0, opt_len);
                     break;
                 }
-
                 for(int j = 1; j < opt_len; j++)
                 {
                     bool find = false;
@@ -179,18 +217,19 @@ static int argument_analysis(CLIarg arg, bird_var* var, options_bird options[])
                 }
             }
         }
-        else if(arg.argc > 1)
+
+        else
         {
             int return_v = NOT_FOUND;
             for(int tool = 1; tool < HOW_MUCH_TOOLS; tool++)
             {
-                return_v = which_tool_core(TOOL_LIST[tool].tool_name, TOOL_LIST[tool].tool, arg, "search");
+                return_v = which_tool_core(TOOL_LIST[tool].tool_name, TOOL_LIST[tool].tool, arg, SEARCH_MOD);
                 if(return_v != NOT_FOUND)
                 {
-                    break;
+                    return return_v;
                 }
             }
-
+            //no target tool found
             if(return_v == NOT_FOUND)
             {
                 options[HELP].switch_opt = true;
@@ -198,17 +237,23 @@ static int argument_analysis(CLIarg arg, bird_var* var, options_bird options[])
                 break;
             }
         }
-        else
-        {
-            options[HELP].switch_opt = true;
-        }
     }
     return 0;
 }
 
+/**
+ * @brief         Prepare variables for subsequent parsing and display, and return the return value
+ *
+ * @param argc         Number of incoming parameters
+ * @param argv         Input parameter
+ * @param envp         Input environment variables
+ *
+ * @return 0        Return value from the tool during normal program execution or a tool call
+ * @return 4        No tool name matching those in TOOL_LIST was found
+ * @return other        Return value from the called tool
+ */
 int goo_goo_bird_tools(int argc, char *argv[], char *envp[])
 {
-    sleep(1);
     CLIarg arg = {argc, argv, envp};
     int lang = (getenv("LC_ALL") && strcasestr(getenv("LC_ALL"), "zh") != NULL) ? ZH_CN:EN_US;
     bird_var var = {false, NULL};
@@ -218,9 +263,14 @@ int goo_goo_bird_tools(int argc, char *argv[], char *envp[])
         [HELP] = {'h', "--help", false} //help
     };
 
-    int return_v = 1;
+    int return_v = 0;
 
     return_v = argument_analysis(arg, &var, options);
     goo_goo_bird_basic(lang, options, var);
+    if(var.unknown)
+    {
+        free(var.unknown);
+        var.unknown = NULL;
+    }
     return return_v;
 }

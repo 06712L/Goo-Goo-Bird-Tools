@@ -42,6 +42,7 @@ ggb-core: $(CORE_OBJS)
 
 
 link: $(BIN_DIR)/$(TARGET)
+	@mkdir -p ~/.local/bin
 	ln -sf $(BIN_DIR)/$(TARGET) ~/.local/bin/$(TARGET)
 
 

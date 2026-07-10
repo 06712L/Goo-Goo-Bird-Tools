@@ -17,12 +17,13 @@ LDFLAGS =
 ifeq ($(DEBUG),1)
 BIN_DIR := $(BUILD_DIR)/bin-debug
 OBJS_DIR := $(BUILD_DIR)/objs-debug
-CFLAGS += -g3
+CFLAGS += -g3 -O0
 
 #release
 else
 BIN_DIR := $(BUILD_DIR)/bin
 OBJS_DIR := $(BUILD_DIR)/objs
+CFLAGS += -O2
 LDFLAGS += -s
 endif
 
