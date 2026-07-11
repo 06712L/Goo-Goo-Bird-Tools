@@ -19,4 +19,4 @@ callgrind.out.*
 #Doxygen
 Doxyfile
 html/
-latex
+latex/

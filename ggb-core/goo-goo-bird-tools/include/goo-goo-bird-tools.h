@@ -9,7 +9,6 @@ enum
 {
     VERSION = 0,
     HELP = 1,
-    MAX_OPT = 2 //How much opt
 };
 
 typedef struct

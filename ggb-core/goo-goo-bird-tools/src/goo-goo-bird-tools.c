@@ -22,6 +22,7 @@ typedef struct
     const char *tools;
     /*Add your tool description! ex: const char *tool_YourToolName;
     添加你的工具說明！ 示範： const char *tool_YourToolName;*/
+    const char *goo_goo_calculator;
 }HELP_t;
 
 //VERSION options
@@ -41,8 +42,9 @@ const HELP_t help[] =
         .options = "options:",
         .opt_help = "\t-h, --help\t\tShow this help message",
         .opt_version = "\t-v, --version\t\tDisplays the version number",
-        .tools = "tools:"
+        .tools = "tools:",
         //Add your tool description! ex: .tool_YourToolName = "\tyour_tool_name\t\tIs a tool";
+        .goo_goo_calculator = "\tgoo-goo-calculator\t\tA computer in the CLI"
     },
 
     [ZH_CN] =
@@ -53,8 +55,9 @@ const HELP_t help[] =
         .options = "选择:",
         .opt_help = "\t-h, --help\t\t显示此辅助说明",
         .opt_version = "\t-v, --version\t\t显示版本号",
-        .tools = "工具:"
+        .tools = "工具:",
         //添加你的工具說明！ 示範： .tool_YourToolName = "\tyour_tool_name\t\t這是個工具";
+        .goo_goo_calculator = "\tgoo-goo-calculator\t\t一个在CLI中的计算机"
     }
 };
 
@@ -99,7 +102,11 @@ void goo_goo_bird_basic(int lang, options_bird options[], bird_var var)
         printf("%s\n", help[lang].opt_help);
         printf("%s\n", help[lang].opt_version);
         printf("%s\n", help[lang].tools);
-        printf("%s\n\n", "\tNothing");
+        //Add your tool description! ex: printf("%s\n\n", help[lang].your_tool_desc);
+        //添加你的工具說明！ 示範： printf("%s\n\n", help[lang].your_tool_desc);
+        //For the final `printf()`, remember to use `\n\n`, and change the preceding `printf()` to use `\n`
+
+        printf("%s\n\n", help[lang].goo_goo_calculator);
     }
 
     return;
@@ -139,7 +146,7 @@ static void short_unknow(bird_var** var, const CLIarg arg, const int which_arg_u
     }
     else
     {
-        (*var)->unknown = malloc(((sizeof(arg.argv[which_arg_unknow][which_unknow])) + 2) * sizeof(char)); //The reason for adding 2 is to accommodate '-' and '\0'
+        (*var)->unknown = malloc(sizeof(char) + 2); //The reason for adding 2 is to accommodate '-' and '\0'
         sprintf((*var)->unknown, "-%c", arg.argv[which_arg_unknow][which_unknow]);
     }
     return;
@@ -169,7 +176,7 @@ static int argument_analysis(CLIarg arg, bird_var* var, options_bird options[])
             if(arg.argv[i][1] == '-')
             {
                 bool find = false;
-                for(int opt = 0; opt < MAX_OPT; opt++)
+                for(int opt = 0; options[opt].short_opt != '\0'; opt++)
                 {
                     if(!strcmp(arg.argv[i], options[opt].long_opt))
                     {
@@ -198,7 +205,7 @@ static int argument_analysis(CLIarg arg, bird_var* var, options_bird options[])
                 for(int j = 1; j < opt_len; j++)
                 {
                     bool find = false;
-                    for(int opt = 0; opt < MAX_OPT; opt++)
+                    for(int opt = 0; options[opt].short_opt != '\0'; opt++)
                     {
                         if(arg.argv[i][j] == options[opt].short_opt)
                         {
@@ -259,7 +266,8 @@ int goo_goo_bird_tools(int argc, char *argv[], char *envp[])
     options_bird options[] =
     {
         [VERSION] = {'v', "--version", false}, //version
-        [HELP] = {'h', "--help", false} //help
+        [HELP] = {'h', "--help", false}, //help
+        {'\0', NULL, false} //It is used to determine whether the list has been fully traversed, so this item is kept at the very end
     };
 
     int return_v = 0;
