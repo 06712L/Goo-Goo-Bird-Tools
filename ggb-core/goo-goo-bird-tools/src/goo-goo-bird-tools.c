@@ -1,4 +1,3 @@
-#include <iso646.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -64,13 +63,13 @@ const VERSION_t version[] =
     [EN_US] =
     {
         .tools_name = "Goo-Goo-Bird Toolbox (GGB-tools)",
-        .tools_version = "GGB Version V0.1",
+        .tools_version = "GGB Version",
     },
 
     [ZH_CN] =
     {
         .tools_name = "Goo-Goo-Bird 工具箱 (GGB-tools)",
-        .tools_version = "GGB 版本 V0.1",
+        .tools_version = "GGB 版本",
     }
 };
 
@@ -87,7 +86,7 @@ void goo_goo_bird_basic(int lang, options_bird options[], bird_var var)
     if(options[VERSION].switch_opt && !var.what_is_that)
     {
         printf("%s\n", version[lang].tools_name);
-        printf("%s\n\n", version[lang].tools_version);
+        printf("%s %s\n\n", version[lang].tools_version, VERSION_text);
     }
 
     //help
@@ -221,9 +220,9 @@ static int argument_analysis(CLIarg arg, bird_var* var, options_bird options[])
         else
         {
             int return_v = NOT_FOUND;
-            for(int tool = 1; tool < HOW_MUCH_TOOLS; tool++)
+            for(int tool = 1; TOOL_LIST[tool].tool_name != NULL; tool++)
             {
-                return_v = which_tool_core(TOOL_LIST[tool].tool_name, TOOL_LIST[tool].tool, arg, SEARCH_MOD);
+                return_v = which_tool_core(TOOL_LIST[tool], arg, SEARCH_MOD);
                 if(return_v != NOT_FOUND)
                 {
                     return return_v;

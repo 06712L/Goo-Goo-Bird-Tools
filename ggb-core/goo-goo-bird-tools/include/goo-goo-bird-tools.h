@@ -3,6 +3,7 @@
 
 #include "cliargs.h"
 #define bool _Bool
+#define VERSION_text "V0.1"
 
 enum
 {
