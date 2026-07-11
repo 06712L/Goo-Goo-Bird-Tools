@@ -15,3 +15,8 @@ compile_commands.json
 #Valgrind
 vgcore.*
 callgrind.out.*
+
+#Doxygen
+Doxyfile
+html/
+latex
