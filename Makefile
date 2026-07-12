@@ -35,9 +35,7 @@ all: ggb-core
 
 include ggb-core/core.mk
 ggb-core: $(CORE_OBJS)
-	@mkdir -p $(BUILD_DIR)
-	@mkdir -p $(BIN_DIR)
-	@mkdir -p $(OBJS_DIR)
+	@mkdir -p $(BUILD_DIR) $(BIN_DIR) $(OBJS_DIR)
 	$(CC) $(LDFLAGS) $^ -o $(BIN_DIR)/$(TARGET)
 
 

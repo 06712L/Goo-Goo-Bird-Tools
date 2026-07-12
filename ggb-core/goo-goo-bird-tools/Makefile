@@ -32,7 +32,7 @@ ifeq ($(STATIC),1)
 LDFLAGS += -static
 endif
 
-OBJS := $(OBJS_DIR)/selection-tool-ggbt.o $(OBJS_DIR)/goo-goo-bird-tools-ggbt.o
+OBJS := $(OBJS_DIR)/selection-tool.o $(OBJS_DIR)/goo-goo-bird-tools.o
 TARGET := goo-goo-bird-tools
 
 .PHONY: main assembly clean cleanbin cleanobj
@@ -40,16 +40,15 @@ all: main
 
 
 main: $(OBJS)
-	@mkdir -p $(BUILD_DIR)
 	@mkdir -p $(BIN_DIR)
 	$(CC) $(LDFLAGS) $(OBJS) -o $(BIN_DIR)/$(TARGET)
 
 
+assembly: CFLAGS += -DCOMBINATION -iquote $(ROOT)/ggb-core/include
 assembly: $(OBJS)
-CFLAGS += -DCOMBINATION -iquote $(ROOT)/ggb-core/include
 
 
-$(OBJS_DIR)/%-ggbt.o: $(SRC_DIR)/%.c
+$(OBJS_DIR)/%.o: $(SRC_DIR)/%.c
 	@mkdir -p $(OBJS_DIR)
 	$(CC) $(CFLAGS) -c $< -o $@
 
