@@ -1,3 +1,8 @@
+//Enable _GNU_SOURCE
+#ifndef _GNU_SOURCE
+#define _GNU_SOURCE
+#endif
+
 #ifdef COMBINATION
 #include "goo-goo-calculator.h"
 #endif
