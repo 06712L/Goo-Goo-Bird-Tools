@@ -167,7 +167,7 @@ static void short_unknow(bird_var** var, const CLIarg arg, const int which_arg_u
  * @return 0        Executing normally
  * @return other        Return value from the called tool
  */
-static int argument_analysis(CLIarg arg, bird_var* var, options_bird options[])
+static int argument_analysis(const CLIarg arg, bird_var* var, options_bird options[])
 {
     if(arg.argc < 2)
     {
