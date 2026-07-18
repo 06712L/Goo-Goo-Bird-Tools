@@ -84,9 +84,9 @@ const VERSION_t version[] =
 /**
  * @brief        Display the selection for goo-goo-bird-tools, the tools included in the toolbox, and version information
  *
- * @param lang        Language
- * @param options        options's flags
- * @param var        Variables for goo-goo-bird-tools
+ * @param[in] lang        Language
+ * @param[in] options        options's flags
+ * @param[in] var        Variables for goo-goo-bird-tools
  */
 void goo_goo_bird_basic(int lang, options_bird options[], bird_var var)
 {
@@ -120,9 +120,9 @@ void goo_goo_bird_basic(int lang, options_bird options[], bird_var var)
 /**
  * @brief        Input the unknown param into var->unknow
  *
- * @param var        Variables for goo-goo-bird-tools
- * @param arg        Shell input values
- * @param which_arg_unknow        Location of the unknown parameter
+ * @param[in, out] var        Variables for goo-goo-bird-tools
+ * @param[in] arg        Shell input values
+ * @param[in] which_arg_unknow        Location of the unknown parameter
  */
 void long_unknow(bird_var** var, const CLIarg arg, const int which_arg_unknow)
 {
@@ -135,11 +135,11 @@ void long_unknow(bird_var** var, const CLIarg arg, const int which_arg_unknow)
 /**
  * @brief        Input the unknown param into var->unknow
  *
- * @param var        Variables for goo-goo-bird-tools
- * @param arg        Shell input values
- * @param which_arg_unknow        Location of the unknown parameter
- * @param which_unknow        The position of the unknown parameter in the position
- * @param len        Parameter string length
+ * @param[in, out] var        Variables for goo-goo-bird-tools
+ * @param[in] arg        Shell input values
+ * @param[in] which_arg_unknow        Location of the unknown parameter
+ * @param[in] which_unknow        The position of the unknown parameter in the position
+ * @param[in] len        Parameter string length
  */
 static void short_unknow(bird_var** var, const CLIarg arg, const int which_arg_unknow, const int which_unknow, const size_t len)
 {
@@ -160,9 +160,9 @@ static void short_unknow(bird_var** var, const CLIarg arg, const int which_arg_u
 /**
  * @brief        Parse the options and tool name passed to goo-goo-bird-tools
  *
- * @param arg        Shell input values
- * @param var        Variables for goo-goo-bird-tools
- * @param options        The option's long name, short name, and flags
+ * @param[in] arg        Shell input values
+ * @param[in, out] var        Variables for goo-goo-bird-tools
+ * @param[in] options        The option's long name, short name, and flags
  *
  * @return 0        Executing normally
  * @return other        Return value from the called tool
@@ -255,9 +255,9 @@ static int argument_analysis(CLIarg arg, bird_var* var, options_bird options[])
 /**
  * @brief         Prepare variables for subsequent parsing and display, and return the return value
  *
- * @param argc         Number of incoming parameters
- * @param argv         Input parameter
- * @param envp         Input environment variables
+ * @param[in] argc         Number of incoming parameters
+ * @param[in] argv         Input parameter
+ * @param[in] envp         Input environment variables
  *
  * @return 0        Return value from the tool during normal program execution or a tool call
  * @return 4        No tool name matching those in TOOL_LIST was found

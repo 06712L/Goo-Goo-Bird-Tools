@@ -41,9 +41,9 @@ const TOOL TOOL_LIST[] =
 /**
 *  @brief        Look for a matching target tool name; otherwise return NOT_FOUND
 *
-*  @param tools        Name of the target tool and the corresponding function
-*  @param arg       Shell input values
-*  @param mod       Search mode
+*  @param[in] tools        Name of the target tool and the corresponding function
+*  @param[in] arg       Shell input values
+*  @param[in] mod       Search mode
 *
 *  @return (*tool_main)(argc, argv, arg.envp)       Return value of the target tool
 *  @return NOT_FOUND        No param matching the target tool name found
@@ -81,7 +81,7 @@ inline int which_tool_core(const TOOL tools, const CLIarg arg, const int mod)
 /**
  * @brief      Remove the path and keep the target name
  *
- * @param[0]  text  The string from which the path needs to be removed
+ * @param[in] text  The string from which the path needs to be removed
  *
  * @return     Memory address of the first character of the target name
  */
@@ -104,9 +104,9 @@ static char* pre_processing(const char *text)
 /**
  * @brief       Invoke the corresponding tool and return its return value
  *
- * @param argc         Number of incoming parameters
- * @param argv         Input parameter
- * @param envp         Input environment variables
+ * @param[in] argc         Number of incoming parameters
+ * @param[in] argv         Input parameter
+ * @param[in] envp         Input environment variables
  *
  * @return 4        No tool name matching those in TOOL_LIST was found
  * @return return_v        Return value of the target tool
