@@ -85,7 +85,7 @@ const VERSION_t version[] =
  * @brief        Display the selection for goo-goo-bird-tools, the tools included in the toolbox, and version information
  *
  * @param[in] lang        Language
- * @param[in] options        options's flags
+ * @param[in] options        Options's flags
  * @param[in] var        Variables for goo-goo-bird-tools
  */
 void goo_goo_bird_basic(int lang, options_bird options[], bird_var var)
@@ -120,7 +120,7 @@ void goo_goo_bird_basic(int lang, options_bird options[], bird_var var)
 /**
  * @brief        Input the unknown param into var->unknow
  *
- * @param[in, out] var        Variables for goo-goo-bird-tools
+ * @param[out] var        Variables for goo-goo-bird-tools
  * @param[in] arg        Shell input values
  * @param[in] which_arg_unknow        Location of the unknown parameter
  */
@@ -135,7 +135,7 @@ void long_unknow(bird_var** var, const CLIarg arg, const int which_arg_unknow)
 /**
  * @brief        Input the unknown param into var->unknow
  *
- * @param[in, out] var        Variables for goo-goo-bird-tools
+ * @param[out] var        Variables for goo-goo-bird-tools
  * @param[in] arg        Shell input values
  * @param[in] which_arg_unknow        Location of the unknown parameter
  * @param[in] which_unknow        The position of the unknown parameter in the position
@@ -161,7 +161,7 @@ static void short_unknow(bird_var** var, const CLIarg arg, const int which_arg_u
  * @brief        Parse the options and tool name passed to goo-goo-bird-tools
  *
  * @param[in] arg        Shell input values
- * @param[in, out] var        Variables for goo-goo-bird-tools
+ * @param[out] var        Variables for goo-goo-bird-tools
  * @param[in] options        The option's long name, short name, and flags
  *
  * @return 0        Executing normally

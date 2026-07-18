@@ -75,6 +75,14 @@ static const VERSION_text version[] =
 	}
 };
 
+/**
+ * @brief      Output text
+ *
+ * @param[in]  arg   Shell input values
+ * @param[in]  var   Unknown parameter
+ * @param[in]  opt   The option's long name, short name, and flags
+ * @param[in]  lang  Language
+ */
 static void show(const CLIarg arg, const unknown_var var, const options opt[], const int lang)
 {
     if(opt[VERSION].switch_opt && !(var.unknown_switch))
@@ -246,6 +254,16 @@ static int argument_analysis(const CLIarg arg, unknown_var* var, options options
     return 0;
 }
 
+/**
+ * @brief      Prepare the required variables and call the corresponding function.
+ *
+ * @param[in] argc  Number of incoming parameters
+ * @param[in] argv  Input parameter
+ * @param[in] envp  Input environment variables
+ *
+ * @return     0  No errors
+ * @return     1  Minor error
+ */
 int goo_goo_calculator(int argc, char *argv[], char *envp[])
 {
 	CLIarg arg = {argc, argv, envp};
