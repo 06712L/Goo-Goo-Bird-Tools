@@ -90,15 +90,16 @@ static char* pre_processing(const char *text)
     size_t len = strlen(text);
 
     char *flag = (char *)text;
-    for(int i = 0; i < len; i++)
+    for(int i = (len - 1); i >= 0; i--)
     {
         if(text[i] == '/')
         {
-            flag = ((char *)text + i);
+            flag = ((char *)text + i + 1); //Adding one shifts the position to the first character of the target
+            break;
         }
     }
 
-    return (flag + 1);
+    return flag;
 }
 
 /**
@@ -115,10 +116,7 @@ int main(int argc, char *argv[], char *envp[])
 {
     //init var
     CLIarg arg = {argc, argv, envp};
-    if(arg.argv[0][0] == '/' || arg.argv[0][0] == '.')
-    {
-        arg.argv[0] = pre_processing(arg.argv[0]);
-    }
+    arg.argv[0] = pre_processing(arg.argv[0]);
     int return_v = NOT_FOUND;
 
     //Select Target Tool
