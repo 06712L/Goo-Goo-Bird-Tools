@@ -141,7 +141,7 @@ void long_unknow(bird_var** var, const CLIarg arg, const int which_arg_unknow)
  * @param which_unknow        The position of the unknown parameter in the position
  * @param len        Parameter string length
  */
-static void short_unknow(bird_var** var, const CLIarg arg, const int which_arg_unknow, const int which_unknow, const int len)
+static void short_unknow(bird_var** var, const CLIarg arg, const int which_arg_unknow, const int which_unknow, const size_t len)
 {
     (*var)->what_is_that = true;
     if(len < 2)
@@ -162,7 +162,7 @@ static void short_unknow(bird_var** var, const CLIarg arg, const int which_arg_u
  *
  * @param arg        Shell input values
  * @param var        Variables for goo-goo-bird-tools
- * @param opions        The option's long name, short name, and flags
+ * @param options        The option's long name, short name, and flags
  *
  * @return 0        Executing normally
  * @return other        Return value from the called tool
@@ -200,7 +200,7 @@ static int argument_analysis(CLIarg arg, bird_var* var, options_bird options[])
             //short opt
             else
             {
-                int opt_len = strlen(arg.argv[i]);
+                size_t opt_len = strlen(arg.argv[i]);
                 if(opt_len < 2)
                 {
                     options[HELP].switch_opt = true;
@@ -266,7 +266,7 @@ static int argument_analysis(CLIarg arg, bird_var* var, options_bird options[])
 int goo_goo_bird_tools(int argc, char *argv[], char *envp[])
 {
     CLIarg arg = {argc, argv, envp};
-    int lang = (getenv("LC_ALL") && strcasestr(getenv("LC_ALL"), "zh") != NULL) ? ZH_CN:EN_US;
+    int lang = (getenv("LANG") && strcasestr(getenv("LANG"), "zh") != NULL) ? ZH_CN:EN_US;
     bird_var var = {false, NULL};
     options_bird options[] =
     {

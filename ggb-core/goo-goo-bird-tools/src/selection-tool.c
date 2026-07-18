@@ -79,6 +79,29 @@ inline int which_tool_core(const TOOL tools, const CLIarg arg, const int mod)
 }
 
 /**
+ * @brief      Remove the path and keep the target name
+ *
+ * @param[0]  text  The string from which the path needs to be removed
+ *
+ * @return     Memory address of the first character of the target name
+ */
+static char* pre_processing(const char *text)
+{
+    size_t len = strlen(text);
+
+    char *flag = (char *)text;
+    for(int i = 0; i < len; i++)
+    {
+        if(text[i] == '/')
+        {
+            flag = ((char *)text + i);
+        }
+    }
+
+    return (flag + 1);
+}
+
+/**
  * @brief       Invoke the corresponding tool and return its return value
  *
  * @param argc         Number of incoming parameters
@@ -92,6 +115,10 @@ int main(int argc, char *argv[], char *envp[])
 {
     //init var
     CLIarg arg = {argc, argv, envp};
+    if(arg.argv[0][0] == '/' || arg.argv[0][0] == '.')
+    {
+        arg.argv[0] = pre_processing(arg.argv[0]);
+    }
     int return_v = NOT_FOUND;
 
     //Select Target Tool
@@ -102,7 +129,7 @@ int main(int argc, char *argv[], char *envp[])
     }
     if(return_v == NOT_FOUND)
     {
-        int lang = (getenv("LC_ALL") && strcasestr(getenv("LC_ALL"), "zh") != NULL) ? ZH_CN:EN_US;
+        int lang = (getenv("LANG") && strcasestr(getenv("LANG"), "zh") != NULL) ? ZH_CN:EN_US;
         bird_var var = {true, NULL};
         bird_var *var_p = &var;
         options_bird options[] =

@@ -35,7 +35,7 @@ const Placeholder_text a_text[] =
 
 int goo_goo_calculator(int argc, char *argv[], char *envp[])
 {
-	int lang = (getenv("LC_ALL") && strcasestr(getenv("LC_ALL"), "zh") != NULL) ? ZH_CN:EN_US;
+	int lang = (getenv("LANG") && strcasestr(getenv("LANG"), "zh") != NULL) ? ZH_CN:EN_US;
 
 	printf("%s\n", a_text[lang].text);
 
