@@ -13,11 +13,9 @@ name: "CodeQL Advanced"
 
 on:
   push:
-    branches: [ "dev" ]
   pull_request:
-    branches: [ "dev" ]
   schedule:
-    - cron: '34 4 * * 5'
+    - cron: '0 4 * * 5'
 
 jobs:
   analyze:
@@ -31,6 +29,8 @@ jobs:
     permissions:
       # required for all workflows
       security-events: write
+
+      pull-requests: write
 
       # required to fetch internal or private CodeQL packs
       packages: read
@@ -64,7 +64,7 @@ jobs:
         sudo apt-get update
         sudo apt-get install -y bear gcc make
 
-    - name: make compilez-commands.json
+    - name: make compile-commands.json
       run: bear -- make
 
     # Add any setup steps before running the `github/codeql-action/init` action.
