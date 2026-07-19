@@ -8,7 +8,6 @@
 #include <stdint.h>
 
 #include "installer.h"
-#define NULL ((void*)0)
 
 static inline bool see_text(const char *src_text, const char *need_text)
 {
