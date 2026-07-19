@@ -30,13 +30,19 @@ endif
 TARGET := goo-goo-bird-tools
 CORE_OBJS =
 
-.PHONY: ggb-core link clean cleanobj cleanbin
-all: ggb-core
+.PHONY: ggb-core build-installer link clean cleanobj cleanbin
+all: build-installer
 
 include ggb-core/core.mk
 ggb-core: $(CORE_OBJS)
-	@mkdir -p $(BUILD_DIR) $(BIN_DIR) $(OBJS_DIR)
+	@mkdir -p $(BIN_DIR) $(OBJS_DIR)
 	$(CC) $(LDFLAGS) $^ -o $(BIN_DIR)/$(TARGET)
+
+
+build-installer: $(OBJS_DIR)/main.o $(OBJS_DIR)/installer.o
+$(OBJS_DIR)/main.o $(OBJS_DIR)/installer.o:
+	make -C installer build ROOT=$(ROOT) DEBUG=$(DEBUG)
+	$(MAKE) ggb-core
 
 
 link: $(BIN_DIR)/$(TARGET)
