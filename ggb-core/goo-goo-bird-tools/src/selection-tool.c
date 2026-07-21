@@ -91,7 +91,7 @@ static char* pre_processing(const char *text)
     size_t len = strlen(text);
 
     char *flag = (char *)text;
-    for(int i = (len - 1); i >= 0; i--)
+    for(int64_t i = (len - 1); i >= 0; i--)
     {
         if(text[i] == '/')
         {
