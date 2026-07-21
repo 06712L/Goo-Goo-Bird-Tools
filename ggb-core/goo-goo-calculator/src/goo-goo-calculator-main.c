@@ -10,6 +10,7 @@
 #include <stdbool.h>
 #include <stdlib.h>
 #include <string.h>
+
 #include "goo-goo-calculator-main.h"
 
 enum
@@ -103,18 +104,6 @@ static void show(const CLIarg arg, const unknown_var var, const options opt[], c
         printf("%s\n", help[lang].opt_help);
         printf("%s\n", help[lang].opt_version);
         printf("%s\n\n", help[lang].opt_calculation);
-    }
-
-    if(opt[CALCULATE].switch_opt)
-    {
-        if(lang == EN_US)
-        {
-            puts("The calculation function is not yet available for use.");
-        }
-        else
-        {
-            puts("计算功能尚未开放使用");
-        }
     }
 
     return;
