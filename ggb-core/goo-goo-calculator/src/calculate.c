@@ -1,6 +1,6 @@
 #include <stdint.h>
 #include <stdbool.h>
-/*#include <stdlib.h>
+#include <stdlib.h>
 #include <stdio.h>
 
 #include "calculate.h"
@@ -74,10 +74,7 @@ static num plus(num x, num y)
 			answer.decimal = (x.decimal + y.decimal);
 			if(answer.decimal >= 1)
 			{
-				char *tmp_char = malloc(20);
-				sprintf(tmp_char, "%.0lf", answer.decimal);
-				uint32_t tmp = atoi(tmp_char);
-				free(tmp_char);
+				uint16_t tmp = (uint16_t)answer.decimal;
 				answer.integer += tmp;
 				answer.decimal -= tmp;
 			}
@@ -97,4 +94,4 @@ int calculate_main(char *expression)
 {
 
 }
-*/
+
