@@ -55,12 +55,13 @@ num minus(num x, num y)
 		if(x.integer >= y.integer)
 		{
 			answer.negative = false;
+			answer.integer = (x.integer - y.integer);
 		}
 		else if(x.integer < y.integer)
 		{
 			answer.negative = true;
+			answer.integer = (y.integer - x.integer);
 		}
-		answer.integer = (x.integer - y.integer);
 	}
 
 
@@ -84,7 +85,7 @@ num minus(num x, num y)
 				}
 				else
 				{
-				answer.integer -= 1;
+					answer.integer -= 1;
 				}
 			}
 		}
@@ -101,6 +102,7 @@ num minus(num x, num y)
 				{
 					answer.negative = true;
 					answer.decimal = (y.decimal - x.decimal);
+					answer.integer += 1;
 				}
 			}
 
@@ -113,6 +115,14 @@ num minus(num x, num y)
 				else if(x.decimal < y.decimal)
 				{
 					answer.decimal = (y.decimal - x.decimal);
+					if(answer.negative)
+					{
+						answer.integer += 1;
+					}
+					else
+					{
+						answer.integer -= 1;
+					}
 				}
 			}
 		}
@@ -120,6 +130,7 @@ num minus(num x, num y)
 
 	return answer;
 }
+
 
 /**
  * @brief      Addition operation
