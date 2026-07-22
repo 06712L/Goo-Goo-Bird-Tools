@@ -4,8 +4,9 @@
 #byproducts
 build/
 goo-goo-bird-tools
-*.a
 a.out
+*.o
+*.a
 
 #bear/clangd
 compile_commands.json
