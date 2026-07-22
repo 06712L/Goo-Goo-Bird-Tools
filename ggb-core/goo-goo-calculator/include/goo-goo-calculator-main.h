@@ -1,5 +1,5 @@
-#ifndef GOO_GOO_CALCUIATOR_H
-#define GOO_GOO_CALCUIATOR_H
+#ifndef GOO_GOO_CALCULATOR_MAIN_H
+#define GOO_GOO_CALCULATOR_MAIN_H
 
 #include <stdbool.h>
 
