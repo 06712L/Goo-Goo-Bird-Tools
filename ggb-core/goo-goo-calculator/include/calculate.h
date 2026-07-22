@@ -9,7 +9,7 @@ enum
 	MINUS = 1,
 	TIMES = 2,
 	DIVIDE = 3,
-	LEIF_BRACKET = 4,
+	LEFI_BRACKET = 4,
 	RIGHT_BRACKET = 5
 };
 
