@@ -30,7 +30,7 @@ endif
 TARGET := goo-goo-bird-tools
 CORE_OBJS =
 
-.PHONY: ggb-core link format clean cleanobj cleanbin
+.PHONY: all ggb-core link format clean cleanobj cleanbin
 all: ggb-core
 
 include ggb-core/core.mk
