@@ -5,7 +5,10 @@
 
 #define DECIMAL_MIN_NUMBER ((double)0.0000000001)
 #define DECIMAL_MIN 10
-#define ZERO {false, false, 0, 0}
+#define ZERO                                                                                                           \
+	{                                                                                                                  \
+		false, false, 0, 0                                                                                             \
+	}
 
 /**
  * @brief      Subtraction operation
