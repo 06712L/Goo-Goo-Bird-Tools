@@ -1,5 +1,5 @@
-#include <stdint.h>
 #include <stdbool.h>
+#include <stdint.h>
 
 #include "calculate.h"
 
@@ -19,15 +19,15 @@ num minus(num x, num y)
 {
 	num answer = ZERO;
 
-	//vvvv     integer
-	if(x.negative || y.negative)
+	// vvvv     integer
+	if (x.negative || y.negative)
 	{
-		if(x.negative ^ y.negative)
+		if (x.negative ^ y.negative)
 		{
-			if(y.negative)
+			if (y.negative)
 			{
 				y.negative = false;
-				//x - (-y) == x + y
+				// x - (-y) == x + y
 			}
 			else
 			{
@@ -38,11 +38,11 @@ num minus(num x, num y)
 		}
 		else //(-x) - (-y) == (-x) + y == y - x
 		{
-			if(x.integer > y.integer)
+			if (x.integer > y.integer)
 			{
 				answer.negative = true;
 			}
-			else if(x.integer <= y.integer)
+			else if (x.integer <= y.integer)
 			{
 				answer.negative = false;
 			}
@@ -51,33 +51,32 @@ num minus(num x, num y)
 	}
 	else
 	{
-		if(x.integer >= y.integer)
+		if (x.integer >= y.integer)
 		{
 			answer.negative = false;
 			answer.integer = (x.integer - y.integer);
 		}
-		else if(x.integer < y.integer)
+		else if (x.integer < y.integer)
 		{
 			answer.negative = true;
 			answer.integer = (y.integer - x.integer);
 		}
 	}
 
-
-	//vvvv     decimal
+	// vvvv     decimal
 	answer.have_decimal = (x.have_decimal || y.have_decimal);
-	if(answer.have_decimal)
+	if (answer.have_decimal)
 	{
-		if(x.have_decimal ^ y.have_decimal)
+		if (x.have_decimal ^ y.have_decimal)
 		{
-			if(x.have_decimal)
+			if (x.have_decimal)
 			{
 				answer.decimal = x.decimal;
 			}
 			else
 			{
 				answer.decimal = (1 - y.decimal);
-				if(!answer.integer)
+				if (!answer.integer)
 				{
 					answer.negative = true;
 					answer.integer += 1;
@@ -90,21 +89,35 @@ num minus(num x, num y)
 		}
 		else
 		{
-			if(x.decimal > y.decimal) answer.decimal = (x.decimal - y.decimal);
-			else if(x.decimal < y.decimal)
+			if (x.decimal > y.decimal)
+			{
+				answer.decimal = (x.decimal - y.decimal);
+			}
+			else if (x.decimal < y.decimal)
 			{
 				answer.decimal = (1 - (y.decimal - x.decimal));
-				if(!answer.integer) answer.negative = true;
-				if(answer.negative) answer.integer += 1;
-				else answer.integer -= 1;
+				if (!answer.integer)
+				{
+					answer.negative = true;
+				}
+				if (answer.negative)
+				{
+					answer.integer += 1;
+				}
+				else
+				{
+					answer.integer -= 1;
+				}
 			}
-			else answer.have_decimal = false;
+			else
+			{
+				answer.have_decimal = false;
+			}
 		}
 	}
 
 	return answer;
 }
-
 
 /**
  * @brief      Addition operation
@@ -118,15 +131,15 @@ num plus(num x, num y)
 {
 	num answer = ZERO;
 
-	//vvvv     integer
-	if(x.negative || y.negative)
+	// vvvv     integer
+	if (x.negative || y.negative)
 	{
-		if(x.negative ^ y.negative)
+		if (x.negative ^ y.negative)
 		{
-			if(y.negative)
+			if (y.negative)
 			{
 				y.negative = false;
-				return minus(x, y); //x + (-y) == x - y
+				return minus(x, y); // x + (-y) == x - y
 			}
 			else
 			{
@@ -146,14 +159,13 @@ num plus(num x, num y)
 		answer.integer = (x.integer + y.integer);
 	}
 
-
-	//vvvv     decimal
+	// vvvv     decimal
 	answer.have_decimal = (x.have_decimal || y.have_decimal);
-	if(answer.have_decimal)
+	if (answer.have_decimal)
 	{
-		if(x.have_decimal ^ y.have_decimal)
+		if (x.have_decimal ^ y.have_decimal)
 		{
-			if(x.have_decimal)
+			if (x.have_decimal)
 			{
 				answer.decimal = x.decimal;
 			}
@@ -166,7 +178,7 @@ num plus(num x, num y)
 		else
 		{
 			answer.decimal = (x.decimal + y.decimal);
-			if(answer.decimal > (1 - DECIMAL_MIN_NUMBER))
+			if (answer.decimal > (1 - DECIMAL_MIN_NUMBER))
 			{
 				uint16_t tmp = (uint16_t)answer.decimal;
 				answer.integer += tmp;
