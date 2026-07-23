@@ -30,7 +30,7 @@ endif
 TARGET := goo-goo-bird-tools
 CORE_OBJS =
 
-.PHONY: ggb-core link clean cleanobj cleanbin
+.PHONY: ggb-core link format clean cleanobj cleanbin
 all: ggb-core
 
 include ggb-core/core.mk
@@ -42,6 +42,10 @@ ggb-core: $(CORE_OBJS)
 link: $(BIN_DIR)/$(TARGET)
 	@mkdir -p ~/.local/bin
 	ln -sf $(BIN_DIR)/$(TARGET) ~/.local/bin/$(TARGET)
+
+
+format:
+	find . -iname '*.c' -exec clang-format --style=file -i {} +
 
 
 clean:
