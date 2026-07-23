@@ -10,7 +10,7 @@ STATIC ?= 0
 
 #Compiler
 CC ?= gcc
-CFLAGS ?= -std=gnu17 -Wall -Werror -iquote $(INCLUDE_DIR)
+CFLAGS ?= -std=gnu17 -Wall -Werror -MMD -MP -iquote $(INCLUDE_DIR)
 LDFLAGS =
 
 #debug
@@ -33,9 +33,10 @@ LDFLAGS += -static
 endif
 
 OBJS := $(OBJS_DIR)/selection-tool.o $(OBJS_DIR)/goo-goo-bird-tools.o
+DEPS := $(OBJS:.o=.d)
 TARGET := goo-goo-bird-tools
 
-.PHONY: main assembly clean cleanbin cleanobj
+.PHONY: all main assembly clean cleanbin cleanobj
 all: main
 
 
@@ -51,6 +52,8 @@ assembly: $(OBJS)
 $(OBJS_DIR)/%.o: $(SRC_DIR)/%.c
 	@mkdir -p $(OBJS_DIR)
 	$(CC) $(CFLAGS) -c $< -o $@
+
+-include $(DEPS)
 
 
 clean:

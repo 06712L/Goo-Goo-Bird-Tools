@@ -10,7 +10,7 @@ STATIC ?= 0
 
 #Compiler
 CC ?= gcc
-CFLAGS ?= -std=gnu17 -Wall -Werror -iquote $(INCLUDE_DIR)
+CFLAGS ?= -std=gnu17 -Wall -Werror -MMD -MP -iquote $(INCLUDE_DIR)
 LDFLAGS =
 
 #debug
@@ -33,14 +33,15 @@ LDFLAGS += -static
 endif
 
 OBJS := $(OBJS_DIR)/goo-goo-calculator-main.o $(OBJS_DIR)/calculate.o
+DEPS := $(OBJS:.o=.d)
 TARGET := goo-goo-calculator
 
-.PHONY: main assembly clean cleanbin cleanobj
+.PHONY: all main assembly clean cleanbin cleanobj
 all: main
 
 
 main: $(OBJS)
-	@mkdir -p $(BUILD_DIR) $(BIN_DIR)
+	@mkdir -p $(BIN_DIR)
 	$(CC) $(LDFLAGS) $(OBJS) -o $(BIN_DIR)/$(TARGET)
 
 
@@ -51,6 +52,8 @@ assembly: $(OBJS)
 $(OBJS_DIR)/%.o: $(SRC_DIR)/%.c
 	@mkdir -p $(OBJS_DIR)
 	$(CC) $(CFLAGS) -c $< -o $@
+
+-include $(DEPS)
 
 
 clean:
