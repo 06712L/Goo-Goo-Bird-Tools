@@ -5,10 +5,9 @@
 
 #define DECIMAL_MIN_NUMBER ((double)0.0000000001)
 #define DECIMAL_MIN 10
-#define ZERO                                                                                                           \
-	{                                                                                                                  \
-		false, false, 0, 0                                                                                             \
-	}
+// clang-format off
+#define ZERO {false, false, 0, 0}
+// clang-format on
 
 /**
  * @brief      Subtraction operation
