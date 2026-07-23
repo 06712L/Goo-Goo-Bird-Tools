@@ -3,9 +3,9 @@
 
 typedef struct
 {
-    int argc;
-    char** argv;
-    char** envp;
-}CLIarg;
+	int argc;
+	char **argv;
+	char **envp;
+} CLIarg;
 
 #endif

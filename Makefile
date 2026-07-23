@@ -45,7 +45,8 @@ link: $(BIN_DIR)/$(TARGET)
 
 
 format:
-	find . -iname '*.c' -exec clang-format --style=file -i {} +
+	find . \( -iname '*.c' -o -iname '*.h' \) \
+		-exec clang-format --style=file -i {} +
 
 
 clean:

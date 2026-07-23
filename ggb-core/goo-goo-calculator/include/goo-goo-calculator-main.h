@@ -3,7 +3,7 @@
 
 #include <stdbool.h>
 
-//vvvvvvvvvv    define
+// vvvvvvvvvv    define
 
 #define VERSION_TEXT "V0.1-DEV"
 
@@ -12,20 +12,20 @@ typedef struct
 	int argc;
 	char **argv;
 	char **envp;
-}CLIarg;
+} CLIarg;
 
 typedef struct
 {
-    const char short_opt;
-    const char *long_opt;
-    bool switch_opt;
-}options;
+	const char short_opt;
+	const char *long_opt;
+	bool switch_opt;
+} options;
 
 typedef struct
 {
 	bool unknown_switch;
 	char *unknown_text;
-}unknown_var;
+} unknown_var;
 
 enum
 {

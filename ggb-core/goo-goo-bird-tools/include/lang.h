@@ -3,8 +3,8 @@
 
 enum
 {
-    EN_US = 0,
-    ZH_CN = 1
+	EN_US = 0,
+	ZH_CN = 1
 };
 
 #endif

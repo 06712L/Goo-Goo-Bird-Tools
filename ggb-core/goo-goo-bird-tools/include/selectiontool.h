@@ -5,16 +5,16 @@
 
 enum
 {
-    SEARCH_MOD = 0,
-    DIRECT_MOD = 1,
-    NOT_FOUND = 4
+	SEARCH_MOD = 0,
+	DIRECT_MOD = 1,
+	NOT_FOUND = 4
 };
 
 typedef struct
 {
-    const char *tool_name;
-    int (*tool_main)(int argc, char **argv, char **envp);
-}TOOL;
+	const char *tool_name;
+	int (*tool_main)(int argc, char **argv, char **envp);
+} TOOL;
 
 extern const TOOL TOOL_LIST[];
 

@@ -1,7 +1,7 @@
 #ifndef CALCULATE_H
 #define CALCULATE_H
 
-//vvvv		define
+// vvvv		define
 
 enum
 {
@@ -19,9 +19,9 @@ typedef struct number
 	_Bool have_decimal;
 	unsigned long integer;
 	double decimal;
-}num;
+} num;
 
-//vvvvvvvvvv	function
+// vvvvvvvvvv	function
 
 int calculate_main(char *expression);
 
