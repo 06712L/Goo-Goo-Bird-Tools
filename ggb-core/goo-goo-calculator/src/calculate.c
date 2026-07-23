@@ -49,7 +49,6 @@ num minus(num x, num y)
 			answer.integer = (y.integer - x.integer);
 		}
 	}
-
 	else
 	{
 		if(x.integer >= y.integer)
@@ -89,42 +88,17 @@ num minus(num x, num y)
 				}
 			}
 		}
-
 		else
 		{
-			if(!answer.integer)
+			if(x.decimal > y.decimal) answer.decimal = (x.decimal - y.decimal);
+			else if(x.decimal < y.decimal)
 			{
-				if(x.decimal > y.decimal)
-				{
-					answer.decimal = (x.decimal - y.decimal);
-				}
-				else if(x.decimal < y.decimal)
-				{
-					answer.negative = true;
-					answer.decimal = (y.decimal - x.decimal);
-					answer.integer += 1;
-				}
+				answer.decimal = (1 - (y.decimal - x.decimal));
+				if(!answer.integer) answer.negative = true;
+				if(answer.negative) answer.integer += 1;
+				else answer.integer -= 1;
 			}
-
-			else
-			{
-				if(x.decimal > y.decimal)
-				{
-					answer.decimal = (x.decimal - y.decimal);
-				}
-				else if(x.decimal < y.decimal)
-				{
-					answer.decimal = (y.decimal - x.decimal);
-					if(answer.negative)
-					{
-						answer.integer += 1;
-					}
-					else
-					{
-						answer.integer -= 1;
-					}
-				}
-			}
+			else answer.have_decimal = false;
 		}
 	}
 
@@ -192,7 +166,7 @@ num plus(num x, num y)
 		else
 		{
 			answer.decimal = (x.decimal + y.decimal);
-			if(answer.decimal >= 1)
+			if(answer.decimal > (1 - DECIMAL_MIN_NUMBER))
 			{
 				uint16_t tmp = (uint16_t)answer.decimal;
 				answer.integer += tmp;
