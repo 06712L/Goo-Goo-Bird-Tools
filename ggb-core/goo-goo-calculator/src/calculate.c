@@ -205,7 +205,7 @@ static uint64_t extract_the_decimal_part(const num num_var)
 		before_decimal_point_size = 2
 	};
 	uint64_t decimal_part = 0;
-	char *tmp = malloc(before_decimal_point_size + DECIMAL_MIN + 1); // "0." + decimal + '\0'
+	char *tmp = malloc(before_decimal_point_size + DECIMAL_PRECISION + 1); // "0." + decimal + '\0'
 	if(!tmp)
 	{
 		return decimal_part;

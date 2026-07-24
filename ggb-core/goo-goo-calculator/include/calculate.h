@@ -11,7 +11,7 @@ enum
 	DIVIDE = 3,
 	LEFI_BRACKET = 4,
 	RIGHT_BRACKET = 5,
-	DECIMAL_MIN = 10
+	DECIMAL_PRECISION = 10
 };
 
 typedef struct number
