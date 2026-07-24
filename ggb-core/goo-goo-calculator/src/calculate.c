@@ -1,5 +1,8 @@
 #include <stdbool.h>
 #include <stdint.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
 #include <sys/types.h>
 
 #include "calculate.h"
@@ -220,6 +223,42 @@ static uint8_t number_of_decimal_places(const double decimal)
 		}
 	}
 	return decimal_number;
+}
+
+/**
+ * @brief      Convert a character to an integer
+ *
+ * @param[in]  text  Characters to be converted to integers
+ *
+ * @return     Converted integer
+ *
+ * @note       Unable to determine if it is a number
+ */
+static inline int ez_atoi(char text)
+{
+	enum
+	{
+		zero_ASCII = 48
+	};
+	return (text - zero_ASCII);
+}
+
+/**
+ * @brief      Take the last digit
+ *
+ * @param[in]  num   need to get the digit in the ones place
+ *
+ * @return     the digit in the ones place
+ */
+static uint8_t take_the_last_digit(const uint64_t num)
+{
+	enum
+	{
+		UINT64_NUMBER_SIZE = 20
+	};
+	char *tmp = malloc((UINT64_NUMBER_SIZE + 1));
+	sprintf(tmp, "%ld", num);
+	return ez_atoi(tmp[(strlen(tmp) - 1)]);
 }
 
 /**
