@@ -10,7 +10,8 @@ enum
 	TIMES = 2,
 	DIVIDE = 3,
 	LEFI_BRACKET = 4,
-	RIGHT_BRACKET = 5
+	RIGHT_BRACKET = 5,
+	DECIMAL_MIN = 10
 };
 
 typedef struct number

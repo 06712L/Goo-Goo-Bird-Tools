@@ -8,7 +8,6 @@
 #include "calculate.h"
 
 #define DECIMAL_MIN_NUMBER ((double)0.0000000001)
-#define DECIMAL_MIN 10
 // clang-format off
 #define ZERO {false, false, 0, 0}
 // clang-format on
@@ -196,69 +195,31 @@ num plus(num x, num y)
 	return answer;
 }
 
-/**
- * @brief      Calculate the number of decimal places
- *
- * @param[in]  Decimals requiring calculation
- *
- * @return     Number of decimal places
- *
- * @note    Supports calculation only up to the tenth decimal place
- */
-static uint8_t number_of_decimal_places(const double decimal)
+// vvvv 	times
+
+
+static uint64_t extract_the_decimal_part(const num num_var)
 {
-	uint8_t decimal_number = 0;
-	double decimal_tmp = (decimal - (DECIMAL_MIN_NUMBER / 10));
-	double tmp = DECIMAL_MIN_NUMBER;
-	for (uint8_t j = DECIMAL_MIN; j > 0; j--)
+	enum
 	{
-		if (!j)
-		{
-			tmp *= 10;
-		}
-		if (tmp > decimal_tmp)
-		{
-			decimal_number = j;
-			break;
-		}
+		before_decimal_point_size = 2
+	};
+	uint64_t decimal_part = 0;
+	char *tmp = malloc(before_decimal_point_size + DECIMAL_MIN + 1); // "0." + decimal + '\0'
+	if(!tmp)
+	{
+		return decimal_part;
 	}
-	return decimal_number;
-}
-
-/**
- * @brief      Convert a character to an integer
- *
- * @param[in]  text  Characters to be converted to integers
- *
- * @return     Converted integer
- *
- * @note       Unable to determine if it is a number
- */
-static inline int ez_atoi(char text)
-{
-	enum
-	{
-		zero_ASCII = 48
-	};
-	return (text - zero_ASCII);
-}
-
-/**
- * @brief      Take the last digit
- *
- * @param[in]  num   need to get the digit in the ones place
- *
- * @return     the digit in the ones place
- */
-static uint8_t take_the_last_digit(const uint64_t num)
-{
-	enum
-	{
-		UINT64_NUMBER_SIZE = 20
-	};
-	char *tmp = malloc((UINT64_NUMBER_SIZE + 1));
-	sprintf(tmp, "%ld", num);
-	return ez_atoi(tmp[(strlen(tmp) - 1)]);
+	sprintf(tmp, "%lf", num_var.decimal);
+	char *ptr_tmp = (tmp + before_decimal_point_size);
+	/* move the pointer to the first decimal place
+	 * 0.xxxx
+	 *   ^    */
+	decimal_part = atoi(ptr_tmp);
+	free(tmp);
+	tmp = NULL;
+	ptr_tmp = NULL;
+	return decimal_part;
 }
 
 /**
@@ -268,30 +229,25 @@ static uint8_t take_the_last_digit(const uint64_t num)
  * @param[in]  y     multiplier
  *
  * @return     Product
+ *
+ * @todo       Continue fixing until the answer is correct
  */
 num times(num x, num y)
 {
 	num answer = ZERO;
 
-	// vvvv     integer
-	if (x.negative || y.negative)
-	{
-		if (x.negative ^ y.negative)
-		{
-			answer.negative = true;
-		}
-		else
-		{
-			answer.negative = false;
-		}
-	}
-	answer.integer = (x.integer * y.integer);
+	// vvvv 	negative
+	answer.negative = (x.negative ^ y.negative);
 
-	// vvvv     decimal
-	answer.have_decimal = (x.have_decimal || y.have_decimal);
-	if (answer.have_decimal)
+	// vvvv 	calculate
+	answer.integer = (x.integer * y.integer);
+	if(x.have_decimal || y.have_decimal)
 	{
-		uint8_t decimal_number = (number_of_decimal_places(x.decimal) + number_of_decimal_places(y.decimal));
+		uint64_t x_decimal = extract_the_decimal_part(x);
+		uint64_t y_decimal = extract_the_decimal_part(y);
+		uint64_t answer_decimal = (x_decimal * y_decimal);
+		answer.integer *= answer_decimal;
+		answer_decimal *= answer.integer;
 	}
 
 	return answer;
