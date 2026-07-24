@@ -207,13 +207,13 @@ static uint8_t number_of_decimal_places(const double decimal)
 	uint8_t decimal_number = 0;
 	double decimal_tmp = (decimal - (DECIMAL_MIN_NUMBER / 10));
 	double tmp = DECIMAL_MIN_NUMBER;
-	for(uint8_t j = DECIMAL_MIN; j > 0; j--)
+	for (uint8_t j = DECIMAL_MIN; j > 0; j--)
 	{
-		if(!j)
+		if (!j)
 		{
 			tmp *= 10;
 		}
-		if(tmp > decimal_tmp)
+		if (tmp > decimal_tmp)
 		{
 			decimal_number = j;
 			break;
@@ -234,10 +234,10 @@ num times(num x, num y)
 {
 	num answer = ZERO;
 
-	//vvvv     integer
-	if(x.negative || y.negative)
+	// vvvv     integer
+	if (x.negative || y.negative)
 	{
-		if(x.negative ^ y.negative)
+		if (x.negative ^ y.negative)
 		{
 			answer.negative = true;
 		}
@@ -248,13 +248,11 @@ num times(num x, num y)
 	}
 	answer.integer = (x.integer * y.integer);
 
-
-	//vvvv     decimal
+	// vvvv     decimal
 	answer.have_decimal = (x.have_decimal || y.have_decimal);
-	if(answer.have_decimal)
+	if (answer.have_decimal)
 	{
 		uint8_t decimal_number = (number_of_decimal_places(x.decimal) + number_of_decimal_places(y.decimal));
-
 	}
 
 	return answer;
