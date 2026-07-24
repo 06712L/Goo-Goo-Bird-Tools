@@ -23,8 +23,6 @@ typedef struct number
 
 // vvvvvvvvvv	function
 
-int calculate_main(char *expression);
-
 num plus(num x, num y);
 num minus(num x, num y);
 
