@@ -197,7 +197,6 @@ num plus(num x, num y)
 
 // vvvv 	times
 
-
 static uint64_t extract_the_decimal_part(const num num_var)
 {
 	enum
@@ -206,7 +205,7 @@ static uint64_t extract_the_decimal_part(const num num_var)
 	};
 	uint64_t decimal_part = 0;
 	char *tmp = malloc(before_decimal_point_size + DECIMAL_PRECISION + 1); // "0." + decimal + '\0'
-	if(!tmp)
+	if (!tmp)
 	{
 		return decimal_part;
 	}
@@ -241,7 +240,7 @@ num times(num x, num y)
 
 	// vvvv 	calculate
 	answer.integer = (x.integer * y.integer);
-	if(x.have_decimal || y.have_decimal)
+	if (x.have_decimal || y.have_decimal)
 	{
 		uint64_t x_decimal = extract_the_decimal_part(x);
 		uint64_t y_decimal = extract_the_decimal_part(y);
