@@ -29,8 +29,8 @@ const TOOL TOOL_LIST[] = {
     [0] = {"goo-goo-bird-tools", goo_goo_bird_tools},
 
 #ifdef COMBINATION
-    /*Add your tool! ex: [1] = {"your_tool_name", your_tool_main}
-    添加你的工具！ 示範： [1] = {"your_tool_name", your_tool_main}*/
+/*Add your tool! ex: [1] = {"your_tool_name", your_tool_main}
+添加你的工具！ 示範： [1] = {"your_tool_name", your_tool_main}*/
 #endif
 
     // clang-format off
