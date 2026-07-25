@@ -28,7 +28,7 @@ typedef struct
 	const char *tools;
 	/*Add your tool description! ex: const char *tool_YourToolName;
 	添加你的工具說明！ 示範： const char *tool_YourToolName;*/
-	const char *goo_goo_calculator;
+	const char *goo_goo_list;
 } HELP_t;
 
 // VERSION options
@@ -47,7 +47,7 @@ const HELP_t help[] = {
                .opt_version = "\t-v, --version\t\tDisplays the version number",
                .tools = "tools:",
                // Add your tool description! ex: .tool_YourToolName = "\tyour_tool_name\t\tIs a tool";
-               .goo_goo_calculator = "\tgoo-goo-calculator\t\tA computer in the CLI"},
+               .goo_goo_list = "\tgoo-goo-list\t\tA tool for listing files and folders"},
 
     [ZH_CN] = {.what = "在我们之中有冒牌参数,可能是",
                .desc = "描述：一个会咕咕叫的工具箱（实际上不会）",
@@ -57,7 +57,7 @@ const HELP_t help[] = {
                .opt_version = "\t-v, --version\t\t显示版本号",
                .tools = "工具:",
                // 添加你的工具說明！ 示範： .tool_YourToolName = "\tyour_tool_name\t\t這是個工具";
-               .goo_goo_calculator = "\tgoo-goo-calculator\t\t一个在CLI中的计算机"}};
+               .goo_goo_list = "\tgoo-goo-list\t\t一个列出档案和文件夹的工具"}};
 
 const VERSION_t version[] = {[EN_US] =
                                  {
@@ -104,7 +104,7 @@ void goo_goo_bird_basic(int lang, options_bird options[], bird_var var)
 		// 添加你的工具說明！ 示範： printf("%s\n\n", help[lang].your_tool_desc);
 		// For the final `printf()`, remember to use `\n\n`, and change the preceding `printf()` to use `\n`
 
-		printf("%s\n\n", help[lang].goo_goo_calculator);
+		printf("%s\n\n", help[lang].goo_goo_list);
 	}
 
 	return;

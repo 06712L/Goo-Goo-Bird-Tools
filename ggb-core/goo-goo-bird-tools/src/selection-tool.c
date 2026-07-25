@@ -20,7 +20,6 @@
  * vvvvv    Include the header file here that allows communication with your tool! ex: #include "your-tool-name.h"
  */
 
-#include "goo-goo-calculator.h"
 #endif
 
 // VVVVVV   Selection Tool
@@ -32,11 +31,11 @@ const TOOL TOOL_LIST[] = {
 #ifdef COMBINATION
     /*Add your tool! ex: [1] = {"your_tool_name", your_tool_main}
     添加你的工具！ 示範： [1] = {"your_tool_name", your_tool_main}*/
-    [1] = {"goo-goo-calculator", goo_goo_calculator},
 #endif
 
-    {NULL,
-     NULL} // It is used to determine whether the list has been fully traversed, so this item is kept at the very end
+    // clang-format off
+    {NULL, NULL} // It is used to determine whether the list has been fully traversed, so this item is kept at the very end
+    // clang-format on
 };
 
 /**
