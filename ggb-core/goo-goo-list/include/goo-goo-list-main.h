@@ -8,6 +8,6 @@ typedef struct
 	int argc;
 	char **argv;
 	char **envp;
-}CLIarg;
+} CLIarg;
 
 #endif

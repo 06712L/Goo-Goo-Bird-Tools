@@ -12,12 +12,12 @@
 typedef struct
 {
 
-}HELP_TEXT;
+} HELP_TEXT;
 
 typedef struct
 {
 
-}VERSION_TEXT;
+} VERSION_TEXT;
 
 int goo_goo_list_main(int argc, char *argv[], char *envp[])
 {
