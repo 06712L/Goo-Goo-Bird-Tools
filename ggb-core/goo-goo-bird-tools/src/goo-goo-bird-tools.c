@@ -117,7 +117,7 @@ void goo_goo_bird_basic(int lang, options_bird options[], bird_var var)
  * @param[in] arg        Shell input values
  * @param[in] which_arg_unknow        Location of the unknown parameter
  */
-void long_unknow(bird_var **var, const CLIarg arg, const int which_arg_unknow)
+void long_unknown(bird_var **var, const CLIarg arg, const int which_arg_unknow)
 {
 	(*var)->what_is_that = true;
 	(*var)->unknown = malloc(strlen(arg.argv[which_arg_unknow]) + 1); // The reason for adding 1 is to accommodate '\0'
@@ -134,7 +134,7 @@ void long_unknow(bird_var **var, const CLIarg arg, const int which_arg_unknow)
  * @param[in] which_unknow        The position of the unknown parameter in the position
  * @param[in] len        Parameter string length
  */
-static void short_unknow(bird_var **var, const CLIarg arg, const int which_arg_unknow, const int which_unknow,
+static void short_unknown(bird_var **var, const CLIarg arg, const int which_arg_unknow, const int which_unknow,
                          const size_t len)
 {
 	(*var)->what_is_that = true;

@@ -1,4 +1,5 @@
 .PHONY: BUILD_goo-goo-bird-tools \
+BUILD_goo-goo-list \
 
 #goo-goo-bird-tools
 $(OBJS_DIR)/selection-tool.o $(OBJS_DIR)/goo-goo-bird-tools.o: BUILD_goo-goo-bird-tools
