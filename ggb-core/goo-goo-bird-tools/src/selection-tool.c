@@ -19,7 +19,7 @@
 /*vvvvv    在此引入可以與你的工具溝通的標頭檔！ 示範： #include "your-tool-name.h"
  * vvvvv    Include the header file here that allows communication with your tool! ex: #include "your-tool-name.h"
  */
-
+#include "goo-goo-list.h"
 #endif
 
 // VVVVVV   Selection Tool
@@ -29,8 +29,9 @@ const TOOL TOOL_LIST[] = {
     [0] = {"goo-goo-bird-tools", goo_goo_bird_tools},
 
 #ifdef COMBINATION
-/*Add your tool! ex: [1] = {"your_tool_name", your_tool_main}
-添加你的工具！ 示範： [1] = {"your_tool_name", your_tool_main}*/
+    /*Add your tool! ex: [1] = {"your_tool_name", your_tool_main}
+    添加你的工具！ 示範： [1] = {"your_tool_name", your_tool_main}*/
+    [1] = {"goo-goo-list", goo_goo_list_main},
 #endif
 
     // clang-format off
