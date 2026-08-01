@@ -3,11 +3,6 @@
 
 // vvvv 	define
 
-typedef struct
-{
-	int argc;
-	char **argv;
-	char **envp;
-} CLIarg;
+
 
 #endif
