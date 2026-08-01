@@ -3,7 +3,6 @@
 
 #byproducts
 build/
-goo-goo-bird-tools
 a.out
 *.o
 *.a

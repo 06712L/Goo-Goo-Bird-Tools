@@ -12,7 +12,7 @@
 
 #include "cliargs.h"
 #include "goo-goo-bird-tools.h"
-#include "lang.h"
+#include "ggb-basic/goo-goo-language.h"
 #include "selectiontool.h"
 
 #ifdef COMBINATION
@@ -139,7 +139,7 @@ int main(int argc, char *argv[], char *envp[])
 		    [HELP] = {'h', "--help", false}        // help
 		};
 
-		long_unknow(&var_p, arg, 0);
+		long_unknown(&var_p, arg, 0);
 		options[HELP].switch_opt = true;
 		goo_goo_bird_basic(lang, options, var);
 	}

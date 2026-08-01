@@ -3,7 +3,6 @@
 
 #include "cliargs.h"
 #define bool _Bool
-#define VERSION_text "V0.1"
 
 enum
 {
@@ -26,6 +25,6 @@ typedef struct
 
 int goo_goo_bird_tools(int argc, char *argv[], char *envp[]);
 void goo_goo_bird_basic(int lang, options_bird options[], bird_var var);
-void long_unknow(bird_var **var, const CLIarg arg, const int which_arg_unknow);
+void long_unknown(bird_var **var, const CLIarg arg, const int which_arg_unknow);
 
 #endif
