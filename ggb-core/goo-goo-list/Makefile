@@ -32,7 +32,10 @@ ifeq ($(STATIC),1)
 LDFLAGS += -static
 endif
 
+include ../lib/lib-objs-list.mk
+
 OBJS := $(OBJS_DIR)/goo-goo-list-main.o
+OBJS += $(GOO_GOO_LIBOBJS)
 DEPS := $(OBJS:.o=.d)
 TARGET := goo-goo-list
 .PHONY: all main assembly clean cleanbin cleanobj

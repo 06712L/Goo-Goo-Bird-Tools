@@ -99,6 +99,7 @@ static int check_short_opt(const char *opt, OPT_LIST *opt_list[])
  * @return  i  Return a parsing error for the long option
  * @return  opt  Return a short option that caused a parsing error
  * @return  NO_OPT_FOUND  No options to parse
+ * @return  0  Successfully parsed
  */
 int goo_goo_getopt(const int argc, const char *argv[], OPT_LIST opt_list[])
 {

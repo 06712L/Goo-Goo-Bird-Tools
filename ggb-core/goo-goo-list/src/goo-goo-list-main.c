@@ -3,12 +3,25 @@
 #define _GNU_SOURCE
 #endif
 
+#include <stdbool.h>
+#include <stddef.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
 #include "goo-goo-list-main.h"
 #include "ggb-basic/goo-goo-language.h"
+#include "lib/goo-goo-getopt.h"
+#include "ggb-basic/goo-goo-version.h"
 
 #ifdef COMBINATION
 #include "goo-goo-list.h"
 #endif
+
+enum
+{
+	VERSION,
+	HELP
+};
 
 typedef struct
 {
@@ -61,12 +74,38 @@ static const VERSION_TEXT version[] =
 	}
 };
 
-void show(int lang)
+static void show(const int lang, const OPT_LIST opt[])
 {
+	if(opt[VERSION].flag)
+	{
+		printf("%s\n", version[lang].tool_name);
+		printf("%s%s\n", version[lang].tool_version, GOO_GOO_VERSION);
+	}
+	if(opt[HELP].flag)
+	{
+		printf("%s\n", help[lang].desc);
+		printf("%s\n", help[lang].usage);
+		printf("%s\n", help[lang].options);
+		printf("%s\n", help[lang].opt_help);
+		printf("%s\n", help[lang].opt_version);
+	}
 	return;
 }
 
 int goo_goo_list_main(int argc, char *argv[], char *envp[])
 {
+	int lang = (getenv("LANG") && strcasestr(getenv("LANG"), "zh") != NULL) ? ZH_CN : EN_US;
+	OPT_LIST opt[] =
+	{
+		[VERSION] = {'v', "version", false},
+		[HELP] = {'h', "help", false},
+		{'\0', NULL, NULL}
+	};
+	int opt_var = goo_goo_getopt(argc, (const char**)argv, opt);
+	if(opt_var == NO_OPT_FOUND)
+	{
+		opt[HELP].flag = true;
+	}
+	show(lang, opt);
 	return 0;
 }
