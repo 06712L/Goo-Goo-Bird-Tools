@@ -11,8 +11,8 @@
 #include <unistd.h>
 
 #include "cliargs.h"
-#include "goo-goo-bird-tools.h"
 #include "ggb-basic/goo-goo-language.h"
+#include "goo-goo-bird-tools.h"
 #include "selectiontool.h"
 
 #ifdef COMBINATION

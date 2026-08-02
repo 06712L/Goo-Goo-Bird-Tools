@@ -9,10 +9,10 @@
 #include <string.h>
 #include <unistd.h>
 
-#include "ggb-basic/goo-goo-version.h"
 #include "cliargs.h"
-#include "goo-goo-bird-tools.h"
 #include "ggb-basic/goo-goo-language.h"
+#include "ggb-basic/goo-goo-version.h"
+#include "goo-goo-bird-tools.h"
 #include "selectiontool.h"
 
 // VVVVVVVV    goo-goo-bird-tools
@@ -39,49 +39,37 @@ typedef struct
 	const char *tools_version;
 } VERSION_t;
 
-static const HELP_t help[] =
-{
-	[EN_US] =
-	{
-		.what = "There's a fake parameter among us, possibly",
-		.desc = "DESC: A toolbox that makes a cooing sound (but actually doesn't)",
-		.usage = "USAGE: goo-goo-bird-tools [options] or [tool] [options] [target]",
-		.options = "options:",
-		.opt_help = "\t-h, --help\t\tShow this help message",
-		.opt_version = "\t-v, --version\t\tDisplays the version number",
-		.tools = "tools:",
-		// Add your tool description! ex: .tool_YourToolName = "\tyour_tool_name\t\tIs a tool";
-		.goo_goo_list = "\tgoo-goo-list\t\tA tool for listing files and folders"
-	},
+static const HELP_t help[] = {
+    [EN_US] = {.what = "There's a fake parameter among us, possibly",
+               .desc = "DESC: A toolbox that makes a cooing sound (but actually doesn't)",
+               .usage = "USAGE: goo-goo-bird-tools [options] or [tool] [options] [target]",
+               .options = "options:",
+               .opt_help = "\t-h, --help\t\tShow this help message",
+               .opt_version = "\t-v, --version\t\tDisplays the version number",
+               .tools = "tools:",
+               // Add your tool description! ex: .tool_YourToolName = "\tyour_tool_name\t\tIs a tool";
+               .goo_goo_list = "\tgoo-goo-list\t\tA tool for listing files and folders"},
 
-	[ZH_CN] =
-	{
-		.what = "在我们之中有冒牌参数,可能是",
-		.desc = "描述：一个会咕咕叫的工具箱（实际上不会）",
-		.usage = "用法：goo-goo-bird-tools [选择] 或者 [工具] [选择] [目标]",
-		.options = "选择:",
-		.opt_help = "\t-h, --help\t\t显示此辅助说明",
-		.opt_version = "\t-v, --version\t\t显示版本号",
-		.tools = "工具:",
-		// 添加你的工具說明！ 示範： .tool_YourToolName = "\tyour_tool_name\t\t這是個工具";
-		.goo_goo_list = "\tgoo-goo-list\t\t一个列出档案和文件夹的工具"
-	}
-};
+    [ZH_CN] = {.what = "在我们之中有冒牌参数,可能是",
+               .desc = "描述：一个会咕咕叫的工具箱（实际上不会）",
+               .usage = "用法：goo-goo-bird-tools [选择] 或者 [工具] [选择] [目标]",
+               .options = "选择:",
+               .opt_help = "\t-h, --help\t\t显示此辅助说明",
+               .opt_version = "\t-v, --version\t\t显示版本号",
+               .tools = "工具:",
+               // 添加你的工具說明！ 示範： .tool_YourToolName = "\tyour_tool_name\t\t這是個工具";
+               .goo_goo_list = "\tgoo-goo-list\t\t一个列出档案和文件夹的工具"}};
 
-static const VERSION_t version[] =
-{
-	[EN_US] =
-	{
-		.tools_name = "Goo-Goo-Bird Toolbox (GGB-tools)",
-		.tools_version = "GGB Version",
-	},
+static const VERSION_t version[] = {[EN_US] =
+                                        {
+                                            .tools_name = "Goo-Goo-Bird Toolbox (GGB-tools)",
+                                            .tools_version = "GGB Version",
+                                        },
 
-	 [ZH_CN] =
-	{
-		.tools_name = "Goo-Goo-Bird 工具箱 (GGB-tools)",
-		.tools_version = "GGB 版本",
-	}
-};
+                                    [ZH_CN] = {
+                                        .tools_name = "Goo-Goo-Bird 工具箱 (GGB-tools)",
+                                        .tools_version = "GGB 版本",
+                                    }};
 
 /**
  * @brief        Display the selection for goo-goo-bird-tools, the tools included in the toolbox, and version
@@ -148,7 +136,7 @@ void long_unknown(bird_var **var, const CLIarg arg, const int which_arg_unknow)
  * @param[in] len        Parameter string length
  */
 static void short_unknown(bird_var **var, const CLIarg arg, const int which_arg_unknow, const int which_unknow,
-                         const size_t len)
+                          const size_t len)
 {
 	(*var)->what_is_that = true;
 	if (len < 2)

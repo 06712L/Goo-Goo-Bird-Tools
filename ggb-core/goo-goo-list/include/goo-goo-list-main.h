@@ -3,6 +3,4 @@
 
 // vvvv 	define
 
-
-
 #endif

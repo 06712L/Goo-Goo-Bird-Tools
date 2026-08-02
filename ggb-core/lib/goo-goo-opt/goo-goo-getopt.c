@@ -1,6 +1,6 @@
-#include <string.h>
-#include <stdbool.h>
 #include "lib/goo-goo-getopt.h"
+#include <stdbool.h>
+#include <string.h>
 
 enum
 {
@@ -22,19 +22,19 @@ enum
 static int check_long_opt(const char *opt, OPT_LIST *opt_list[])
 {
 	size_t len = strlen(opt);
-	if(len < 3)
+	if (len < 3)
 	{
 		return HYPHEN;
 	}
 
-	for(size_t i = 0; opt_list[i]->long_name != NULL; i++)
+	for (size_t i = 0; opt_list[i]->long_name != NULL; i++)
 	{
 		bool flag = true;
-		for(size_t j = 2; j < len; j++)
+		for (size_t j = 2; j < len; j++)
 		{
-			if(opt[j] != opt_list[i]->long_name[j])
+			if (opt[j] != opt_list[i]->long_name[j])
 			{
-				if(opt_list[i + 1]->long_name == NULL)
+				if (opt_list[i + 1]->long_name == NULL)
 				{
 					return DOES_NOT_MATCH;
 				}
@@ -45,7 +45,7 @@ static int check_long_opt(const char *opt, OPT_LIST *opt_list[])
 				}
 			}
 		}
-		if(flag)
+		if (flag)
 		{
 			opt_list[i]->flag = true;
 			return CONFROM_TO;
@@ -71,11 +71,11 @@ static int check_short_opt(const char *opt, OPT_LIST *opt_list[])
 	{
 		return HYPHEN;
 	}
-	for(size_t i = 1; i < len; i++)
+	for (size_t i = 1; i < len; i++)
 	{
-		for(int j = 0; opt_list[j]->short_name != '\0'; j++)
+		for (int j = 0; opt_list[j]->short_name != '\0'; j++)
 		{
-			if(opt[i] == opt_list[j]->short_name)
+			if (opt[i] == opt_list[j]->short_name)
 			{
 				opt_list[j]->flag = true;
 				break;
@@ -112,7 +112,7 @@ int goo_goo_getopt(const int argc, const char *argv[], OPT_LIST opt_list[])
 			if (argv[i][1] == '-')
 			{
 				int opt = check_long_opt(argv[i], &opt_list);
-				if(opt == DOES_NOT_MATCH)
+				if (opt == DOES_NOT_MATCH)
 				{
 					return i;
 				}
@@ -131,7 +131,7 @@ int goo_goo_getopt(const int argc, const char *argv[], OPT_LIST opt_list[])
 			}
 		}
 	}
-	if(!count)
+	if (!count)
 	{
 		return NO_OPT_FOUND;
 	}

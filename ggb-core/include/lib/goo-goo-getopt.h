@@ -13,7 +13,7 @@ typedef struct goo_goo_options_list
 	const char short_name;
 	const char *long_name;
 	_Bool flag;
-}OPT_LIST;
+} OPT_LIST;
 
 // vvvv 	function
 
