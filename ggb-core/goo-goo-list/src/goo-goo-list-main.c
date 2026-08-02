@@ -25,7 +25,7 @@ typedef struct
 	const char *tool_version;
 } VERSION_TEXT;
 
-const HELP_TEXT help[] =
+static const HELP_TEXT help[] =
 {
 	[EN_US] =
 	{
@@ -46,7 +46,7 @@ const HELP_TEXT help[] =
 	}
 };
 
-const VERSION_TEXT version[] =
+static const VERSION_TEXT version[] =
 {
 	[EN_US] =
 	{

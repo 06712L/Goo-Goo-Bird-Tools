@@ -39,7 +39,7 @@ typedef struct
 	const char *tools_version;
 } VERSION_t;
 
-const HELP_t help[] =
+static const HELP_t help[] =
 {
 	[EN_US] =
 	{
@@ -68,7 +68,7 @@ const HELP_t help[] =
 	}
 };
 
-const VERSION_t version[] =
+static const VERSION_t version[] =
 {
 	[EN_US] =
 	{
